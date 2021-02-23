@@ -5,6 +5,43 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'ferreteria';
+  title = 'Ferretería Rosita';
+  nombre = 'Rodriguez Pablo';
+  edad = 4;
+  email = 'rpablo@gmail.com';
+  sueldos = [1700, 1600, 1900];
+  activo = true;
+  sitio='http://www.google.com';
+  contador = 1;
+
+  incrementar() {
+    this.contador++;
+  }
+
+  decrementar() {
+    this.contador--;
+  }
+  esActivo() {
+    if (this.activo)
+      return 'Trabajador Activo';
+    else
+      return 'Trabajador Inactivo';
+  }
+
+  ultimos3Sueldos() {
+    let suma=0;
+    for(let x=0; x<this.sueldos.length; x++)
+      suma+=this.sueldos[x];
+    return suma;
+  }
+
+  ngOnInit() {
+    //Toggle Click Function
+$("#menu-toggle").click(function(e) {
+e.preventDefault();
+$("#wrapper").toggleClass("toggled");
+});
+}
 }
