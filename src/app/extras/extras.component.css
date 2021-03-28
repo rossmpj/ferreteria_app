@@ -1,0 +1,30 @@
+.table-responsive-tab {
+    display: table;
+}
+
+.tab-content >
+.tab-pane > 
+.table-responsive{ 
+    display: table;
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+}
+  
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+th{
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-top-width: 0;
+    border-bottom-width: 1px;
+}
+
+.mat-icon-button.mat-success {
+    color:limegreen;
+}

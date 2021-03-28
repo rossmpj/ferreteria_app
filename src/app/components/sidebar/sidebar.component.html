@@ -1,4 +1,4 @@
-<div class="logo">
+<!-- <div class="logo">
     <a href="https://www.creative-tim.com" class="simple-text">
         <div class="logo-img">
             <img src="/assets/img/angular2-logo-red.png"/>
@@ -7,7 +7,49 @@
     </a>
 </div>
 <div class="sidebar-wrapper">
-  <!-- <div *ngIf="isMobileMenu()">
+
+    <ul class="nav">
+        <li>
+            <a >
+                <p>item 1</p>
+            </a>
+            <a >
+                <p>item 2</p>
+            </a>
+            <a >
+                <p>item 3</p>
+            </a>
+        </li>
+    </ul>
+</div> -->
+
+<!-- <div class="d-flex" id="wrapper">
+<div class="bg-dark border-right" id="sidebar-wrapper">
+    <div >
+        <img class="logo" src="/assets/img/F1.jpg"/>Ferretería Rosita
+    </div>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+  </div>
+</div> -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- <link href="node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css" rel="stylesheet"> -->
+
+<div class="logo bg-rose">
+    <a class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/7.png"/>
+        </div>
+        Ferretería
+    </a>
+</div>
+<div class="bg-rose sidebar-wrapper">
+  <div *ngIf="isMobileMenu()">
     <form class="navbar-form">
       <span class="bmd-form-group">
         <div class="input-group no-border">
@@ -53,18 +95,103 @@
             </a>
         </li>
     </ul>
-  </div> -->
+  </div>
+  <!-- <ul class="nav">
+    <li  class="nav-item">
+        <a class="nav-link">
+            <i class="material-icons">dashboard</i>
+            <p>
+                <span class="d-lg-none d-md-block">Stats</span>
+            </p>
+        </a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons">notifications</i>
+            <span class="notification">5</span>
+            <p>
+                <span class="d-lg-none d-md-block">Some Actions</span>
+            </p>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Mike John responded to your email</a>
+            <a class="dropdown-item" href="#">You have 5 new tasks</a>
+            <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+            <a class="dropdown-item" href="#">Another Notification</a>
+            <a class="dropdown-item" href="#">Another One</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)">
+            <i class="material-icons">person</i>
+            <p>
+                <span class="d-lg-none d-md-block">Account</span>
+            </p>
+        </a>
+    </li>
+</ul> -->
+<!-- <ul class="nav-item">
+    <a data-toggle="collapse" href="#collapseExample1" class="collapsed">
+      <span [routerLink]="[menuItem.path]">
+        <i class="material-icons">{{menuItem.icon}}</i>
+                 <p>{{menuItem.title}}</p>
+        <b class="caret"></b>
+      </span>
+    </a>
+    <div class="collapse" id="collapseExample1">
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link">
+            <span class="sidebar-normal">Sub menu 01</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link">
+            <span class="sidebar-normal">Sub menu 02</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link">
+            <span class="sidebar-normal">Sub menu 03</span>
+          </a>
+        </li>
+      </ul> -->
     <ul class="nav">
-        <li>
-            <a >
-                <p>item 1</p>
-            </a>
-            <a >
-                <p>item 2</p>
-            </a>
-            <a >
-                <p>item 3</p>
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                 <p>{{menuItem.title}}</p> 
             </a>
         </li>
     </ul>
 </div>
+
+<!-- <ul class="nav">
+    <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="collapsed {{menuItem.class}} nav-item">
+        <a class="nav-link" [routerLink]="[menuItem.path]" data-toggle="collapse" href="#.{{menuItem.path}}">
+            <i class="material-icons">{{menuItem.icon}}</i>
+             <p>{{menuItem.title}}<b *ngIf="menuItem.children" class="caret"></b></p> 
+        </a>
+            <ul class="nav" id="{{menuItem.path}}" *ngIf="menuItem.children && menuItem.children.length > 0">
+               <li routerLinkActive="active" *ngFor="let childmenu of menuItem.children" class="{{menuItem.class}} nav-item">
+                 <a class="nav-link" [routerLink]="[childmenu.path]">
+                   <i class="material-icons">{{childmenu.icon}}</i>
+                   <p>{{childmenu.title}}</p>
+                  </a>
+               </li>
+            </ul>
+    </li>
+</ul> -->
+<!-- <div class="d-flex" id="wrapper2">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Therichpost </div>
+        <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item list-group-item-action bg-light">D</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">S</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">O</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">E</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">P</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">S</a>
+        </div><button type="button" class="btn btn-primary" id="menu-toggle2"><i class="fas fa-camera" ></i>hvh</button>
+      </div>
+    </div> -->
