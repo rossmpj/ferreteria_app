@@ -10,6 +10,23 @@
     overflow-x: auto;
 }
 
+section {
+    display: inline-block;
+    width: 100%;
+  }
+  .example-label {
+    /* display: table-cell; */
+    font-size: 14px;
+    margin-left: 8px;
+    /* min-width: 200px; */
+    float: right;
+  }
+  
+  .example-button-row {
+    /* display: table-cell; */
+    /* width: 690px; */
+    float: left;
+  }
 table {
     width: 100%;
 }

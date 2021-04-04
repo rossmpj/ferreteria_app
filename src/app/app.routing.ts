@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { DashboardComponent } from '../app/dashboard/dashboard.component';
-import { TableListComponent } from '../app/table-list/table-list.component';
-import { UserProfileComponent } from '../app/user-profile/user-profile.component';
-import { ReportesComponent } from './reportes/reportes.component';
-import { ExtrasComponent } from './extras/extras.component';
+import { DashboardComponent } from './layouts/admin-layout/dashboard/dashboard.component';
+import { UserProfileComponent } from './layouts/admin-layout/user-profile/user-profile.component';
+import { ReportesComponent } from './layouts/admin-layout/reportes/reportes.component';
+import { ExtrasComponent } from './layouts/admin-layout/extras/extras.component';
+import { VentasComponent } from './layouts/admin-layout/ventas/ventas.component';
+import { ClienteComponent } from './layouts/admin-layout/cliente/cliente.component';
+import { EmpleadoComponent } from './layouts/admin-layout/empleado/empleado.component';
+import { FormProductoComponent } from './form-producto/form-producto.component';
+import { ProductoComponent } from './layouts/admin-layout/producto/producto.component';
 
 const routes: Routes =[
   {
@@ -22,30 +25,39 @@ const routes: Routes =[
     //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     // }]
   }, {
-    path: 'product-list',
-    component: TableListComponent,
+    path: 'producto',
+    component: ProductoComponent,
     // children: [{
     //   path: '',
     //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     // }]
-  }, {
-    path: 'user-profile',
-    component: UserProfileComponent,
-    // children: [{
-    //   path: '',
-    //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-    // }]
-  }, {
+  },
+  // {
+  //   path: 'user-profile',
+  //   component: UserProfileComponent,
+  // }, 
+  {
     path: 'reportes',
     component: ReportesComponent,
   }, {
     path: 'extras',
     component: ExtrasComponent,
   }, 
-  // {
-  //   path: 'color',
-  //   component: ColorComponent,
-  // }
+  {
+    path: 'ventas',
+    component: VentasComponent,
+  }, {
+    path: 'cliente',
+    component: ClienteComponent,
+  }, 
+  {
+    path: 'empleado',
+    component: EmpleadoComponent,
+  }, 
+  {
+    path: 'form-producto',
+    component: FormProductoComponent,
+  }
 ];
 
 @NgModule({

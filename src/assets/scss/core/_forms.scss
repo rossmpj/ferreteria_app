@@ -29,7 +29,7 @@ form {
   background: $bmd-form-control-bg-repeat-y $bmd-form-control-bg-position;
   background-size: $bmd-form-control-bg-size;
   border: 0;
-  height: 25px;
+  height: auto;
   transition: background 0s ease-out;
   padding-left: 0;
   padding-right: 0;
@@ -42,9 +42,10 @@ form {
     background-size: $bmd-form-control-bg-size-active;
     border-bottom: $input-btn-border-width solid $input-border-color;
     transition-duration: 0.3s;
-    border-color: $bg-rose;
+    border-color: $transparent;
     background-color: transparent;
-    box-shadow: rgb(33, 50, 43, 25%);
+    box-shadow: none !important;
+    // rgb(33, 50, 43, 25%)
   }
 
   @include material-placeholder() {

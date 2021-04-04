@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { ProductoService } from 'src/app/services/producto.service';
+import { VentasService } from 'src/app/services/ventas.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,11 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  public totalProductos!: number;
+  public totalVentas!: number;
+  constructor(private _servicioProducto: ProductoService,
+    private _servicioVentas: VentasService) { }
 
-  constructor() { }
   startAnimationForLineChart(chart: Chartist.IChartistLineChart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -65,9 +70,29 @@ export class DashboardComponent implements OnInit {
 
       seq2 = 0;
   };
+
+  getTotalProductos = () => {
+    this._servicioProducto.getTotalProductos().subscribe(data => {
+      // this.dataSrc.data = data as IColor[];
+      this.totalProductos = data;
+      // console.log("dataa",this.dataSrc.data);
+    },error => {
+      console.log(error)
+    });
+  }
+  getTotalVentas = () => {
+    this._servicioVentas.getTotalVentas().subscribe(data => {
+      // this.dataSrc.data = data as IColor[];
+      this.totalVentas = data;
+      // console.log("dataa",this.dataSrc.data);
+    },error => {
+      console.log(error)
+    });
+  }
   ngOnInit() {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
+    this.getTotalProductos();
+    this.getTotalVentas();
       const dataDailySalesChart: any = {
           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
           series: [
