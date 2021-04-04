@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -33,12 +33,8 @@ import { FormProductoComponent } from './form-producto/form-producto.component';
 import { ProductoComponent } from './layouts/admin-layout/producto/producto.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
-import en from '@angular/common/locales/en';
 import { ChartistModule } from 'ng-chartist';
 
-registerLocaleData(en);
 @NgModule({
   imports: [
     CommonModule,
@@ -92,7 +88,7 @@ registerLocaleData(en);
   ],
   entryComponents: [ModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
