@@ -1,0 +1,66 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <section>
+                    <div class="example-button-row">
+                        <button mat-raised-button class="btn btn-default"><i class="material-icons">add</i> Registrar venta</button> 
+                    </div>
+                    <div class="example-label">
+                        <div class="input-group no-border">
+                            <mat-form-field appearence="fill">
+                                <mat-icon matSuffix>search</mat-icon>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar registro">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </section>
+                <div class="card">
+                    <div class="card-header card-header-rose">
+                        <h4 class="card-title ">Registro de ventas</h4>
+                        <p class="card-category"> Listado de ventas realizadas en Ferretería Rosita</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData.length > 0" matSort class="mat-elevation-z8">
+                                <ng-container matColumnDef="codigo">
+                                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
+                                    <td mat-cell *matCellDef="let element"> <a class="link">{{element.codigo}}</a>  </td>
+                                </ng-container>
+                                <ng-container matColumnDef="fecha">
+                                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.fecha.slice(0, 10)}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="total">
+                                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+                                    <td mat-cell *matCellDef="let element"> $ {{element.total}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="cliente">
+                                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.cliente == NULL ? 'N/A': element.cliente}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="empleado">
+                                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Empleado </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.empleado}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="actions">
+                                    <th class="text-primary" mat-header-cell  *matHeaderCellDef > Acciones </th>
+                                    <td mat-cell *matCellDef="let row" >
+                                        <button (click)="openDialog()" mat-icon-button class="btn btn-just-icon btn-info btn-sm"><i class="material-icons">visibility</i></button>
+                                        &nbsp;<button mat-icon-button class="btn btn-just-icon btn-success btn-sm"><i class="material-icons">edit</i></button>
+                                        &nbsp;<button mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button>
+                                    </td>    
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div class="txt" *ngIf="dataSource.filteredData.length === 0"><img src="/assets/img/n.png">No hay datos para mostrar</div>
+                            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

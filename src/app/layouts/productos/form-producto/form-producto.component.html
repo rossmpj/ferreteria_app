@@ -1,0 +1,82 @@
+<h1 mat-dialog-title> {{ accion }} producto</h1>
+<mat-dialog-content class="row">
+    <form [formGroup]="formInstance">
+        <div class="row">
+            <div id="idp" class="col-md-12">
+                <mat-form-field appearance="fill">
+                    <mat-label> ID </mat-label>
+                    <input class="form-control" formControlName="idProducto" matInput placeholder="Escriba aquí sus nombres completos" type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field appearance="fill">
+                    <mat-label> Nombre </mat-label>
+                    <input class="form-control" formControlName="nombre" matInput placeholder="Escriba aquí sus nombres completos" type="text">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Precio </mat-label>
+                    <input class="form-control" formControlName="precio" matInput placeholder="Escriba aquí sus apellidos completos" step=".01" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Medida </mat-label>  
+                    <input class="form-control" formControlName="medida" matInput placeholder="" type="text">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Stock </mat-label>  
+                    <input class="form-control" formControlName="stock" matInput placeholder="example@mail.com" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Categoría </mat-label>  
+                    <mat-select formControlName="idCategoria">
+                        <mat-option *ngFor="let dato of datosCat" [value]="dato.idCategoria">
+                            {{dato.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Color </mat-label>  
+                    <mat-select formControlName="idColor">
+                        <mat-option *ngFor="let dato of datosCol" [value]="dato.idColor">
+                            {{dato.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Marca </mat-label>
+                    <mat-select formControlName="idMarca">
+                        <mat-option *ngFor="let dato of datosMar" [value]="dato.idMarca">
+                            {{dato.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<div class="pull-right" mat-dialog-actions>
+    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger">Cancelar</button>
+    <button id="aceptarbtn" mat-button mat-dialog-close class="btn btn-primary" cdkFocusInitial>Aceptar</button>
+    <button id="guardarbtn" mat-button class="btn btn-success" cdkFocusInitial> Guardar</button>
+    <!-- {{accion==="Detalle de "? 'Cerrar' : 'Guardar'}} -->
+</div>

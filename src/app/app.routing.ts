@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './layouts/admin-layout/dashboard/dashboard.component';
-import { UserProfileComponent } from './layouts/admin-layout/user-profile/user-profile.component';
-import { ReportesComponent } from './layouts/admin-layout/reportes/reportes.component';
-import { ExtrasComponent } from './layouts/admin-layout/extras/extras.component';
-import { VentasComponent } from './layouts/admin-layout/ventas/ventas.component';
-import { ClienteComponent } from './layouts/admin-layout/cliente/cliente.component';
-import { EmpleadoComponent } from './layouts/admin-layout/empleado/empleado.component';
-import { FormProductoComponent } from './form-producto/form-producto.component';
-import { ProductoComponent } from './layouts/admin-layout/producto/producto.component';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+import { UserProfileComponent } from './layouts/user-profile/user-profile.component';
+import { ReportesComponent } from './layouts/reportes/reportes.component';
+import { VentasComponent } from './layouts/ventas/ventas.component';
+import { FormProductoComponent } from './layouts/productos/form-producto/form-producto.component';
+import { TablaProductosComponent } from './layouts/productos/tabla-productos/tabla-productos.component';
+import { TablaExtrasComponent } from './layouts/extras/tabla-extras/tabla-extras.component';
+import { TablaClientesComponent } from './layouts/clientes/tabla-clientes/tabla-clientes.component';
+import { TablaEmpleadosComponent } from './layouts/empleados/tabla-empleados/tabla-empleados.component';
 
 const routes: Routes =[
   {
@@ -22,14 +22,14 @@ const routes: Routes =[
     component: DashboardComponent,
     // children: [{
     //   path: '',
-    //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+    //   loadChildren: './layouts/admin-layout.module#AdminLayoutModule'
     // }]
   }, {
     path: 'producto',
-    component: ProductoComponent,
+    component: TablaProductosComponent,
     // children: [{
     //   path: '',
-    //   loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+    //   loadChildren: './layouts/admin-layout.module#AdminLayoutModule'
     // }]
   },
   // {
@@ -41,18 +41,18 @@ const routes: Routes =[
     component: ReportesComponent,
   }, {
     path: 'extras',
-    component: ExtrasComponent,
+    component: TablaExtrasComponent,
   }, 
   {
     path: 'ventas',
     component: VentasComponent,
   }, {
     path: 'cliente',
-    component: ClienteComponent,
+    component: TablaClientesComponent,
   }, 
   {
     path: 'empleado',
-    component: EmpleadoComponent,
+    component: TablaEmpleadosComponent,
   }, 
   {
     path: 'form-producto',
