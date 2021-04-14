@@ -5,78 +5,97 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IEmpleado } from 'src/app/interfaces/iempleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
+import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 import { FormEmpleadoComponent } from '../form-empleado/form-empleado.component';
 
 @Component({
-  selector: 'app-tabla-empleados',
-  templateUrl: './tabla-empleados.component.html',
-  styleUrls: ['./tabla-empleados.component.css']
+    selector: 'app-tabla-empleados',
+    templateUrl: './tabla-empleados.component.html',
+    styleUrls: ['./tabla-empleados.component.css']
 })
 export class TablaEmpleadosComponent implements OnInit {
-  constructor(private _servicioEmpleado: EmpleadoService,
-    public dialog: MatDialog) { }
-  public obtenerEmpleados = () => {
-    this._servicioEmpleado.getEmpleados().subscribe(data => {
-      this.dataSource.data = data as IEmpleado[];
-    },error => {
-      console.log(error)
-    });
-  }
-  openDialog(producto: IEmpleado) {
-    console.log("prod: ",producto);
-     this.obtenerProductoId(producto.idEmpleado);
-    // this.dialog.open(ModalComponent, {
-    //     width: '700px',
-        // height: '75%',
-        // data: producto 
-    //     {nombre: this.nombre, precio: this.precio,
-    //     categoria: this.categoria, medida: this.medida, marca: this.marca,
-    // color: this.color, stock: this.stock}
-    // });
-}
-public obtenerProductoId = (id: string) => {
-  this._servicioEmpleado.getEmpleadoById(id).subscribe(data => {
-      // console.log("dataa",this.dataSource.data);
-      // this.nombre = data.nombre;
-      // this.precio = data.precio;
-      // this.categoria = data.idCategoria;
-      // this.color = data.idColor;
-      // this.stock = data.stock;
-      // this.medida = data.medida;
-      // this.marca = data.idMarca;
-      console.log("p ",data);
-      this.dialog.open(FormEmpleadoComponent, {
-          width: '700px',
-          // height: '75%',
-          data: data as IEmpleado[]
-      //     {nombre: this.nombre, precio: this.precio,
-      //     categoria: this.categoria, medida: this.medida, marca: this.marca,
-      // color: this.color, stock: this.stock}
-      });
-  },error => {
-      console.log(error)
-  });
-}
-  displayedColumns: string[] = ['idEmpleado', 'nombre', 'apellido', 'cedula', 'correo', 'actions'];
-  dataSource = new MatTableDataSource<IEmpleado>();
+    constructor(
+        private _servicioEmpleado: EmpleadoService,
+        public dialog: MatDialog ) {
+            this.dialog.afterAllClosed.subscribe(()=> this.obtenerEmpleados()) 
+        }
 
-  @ViewChild(MatSort)
-  sort: MatSort = new MatSort;
-  
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+    public obtenerEmpleados = () => {
+        this._servicioEmpleado.getEmpleados().subscribe(data => {
+            this.dataSource.data = data as IEmpleado[];
+        }, error => {
+            console.log(error)
+        });
+    }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
+    openDialog(producto: IEmpleado) {
+        console.log("prod: ",producto);
+        this.obtenerProductoId(producto.idEmpleado, "Editar");
+    }
 
-  ngAfterViewInit() {    
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  ngOnInit(): void {
-    this.obtenerEmpleados();
-  }
+    agregarEmp() {
+        this.dialog.open(FormEmpleadoComponent, {
+            disableClose: true,
+            width: '700px',
+            data: {idEmpleado: "", nombre: "", apellido: "", cedula: "", correo: "", accion: "Agregar"}
+        });
+    }
+
+    public obtenerProductoId = (id: string, accion: string) => {
+        this._servicioEmpleado.getEmpleadoById(id).subscribe(data => {
+            this.dialog.open(FormEmpleadoComponent, {
+                width: '700px',
+                data: {
+                    nombre: data.nombre, 
+                    idEmpleado: data.idEmpleado,
+                    apellido: data.apellido, 
+                    cedula: data.cedula, 
+                    correo: data.correo,
+                    accion: accion
+                }
+            });
+        },error => {
+            console.log(error)
+        });
+    }
+
+    displayedColumns: string[] = ['idEmpleado', 'nombre', 'apellido', 'cedula', 'correo', 'actions'];
+    dataSource = new MatTableDataSource<IEmpleado>();
+
+    private paginator!: MatPaginator;
+    private sort!: MatSort;
+
+    @ViewChild(MatSort) set matSort(ms: MatSort) {
+        this.sort = ms;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+        this.paginator = mp;
+        this.setDataSourceAttributes();
+    }
+
+    setDataSourceAttributes() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
+
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
+
+    ngOnInit(): void {
+        this.obtenerEmpleados();
+    }
+
+    eliminarEmpleado(id: string){
+        this.dialog.open(DeleteDialogComponent, {
+            data: {
+                id: id,
+                clase: "empleado"
+            }
+        });
+    }
 }

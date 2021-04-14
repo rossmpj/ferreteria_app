@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,31 +12,76 @@ import { ICategoria } from 'src/app/interfaces/icategoria';
 import { FormCategoriaComponent } from '../form-categoria/form-categoria.component';
 import { FormColorComponent } from '../form-color/form-color.component';
 import { FormMarcaComponent } from '../form-marca/form-marca.component';
+import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-tabla-extras',
   templateUrl: './tabla-extras.component.html',
   styleUrls: ['./tabla-extras.component.css']
 })
-export class TablaExtrasComponent implements OnInit, AfterViewInit {
+export class TablaExtrasComponent implements OnInit {
     public displayedColumns = ['idMarca', 'nombre', 'acciones'];
     public displayedColumns1 = ['idColor', 'nombre', 'acciones'];
     public displayedColumns2 = ['idCategoria', 'nombre', 'descripcion','acciones'];
     public dataSource = new MatTableDataSource<IMarca>();
     public dataSrc = new MatTableDataSource<IColor>();
     public dataSrcCat = new MatTableDataSource<ICategoria>();
-    @ViewChild('MatSort1') MatSort1: MatSort = new MatSort;
-    @ViewChild('MatSort2') MatSort2: MatSort = new MatSort;
-    @ViewChild('MatSort3') MatSort3: MatSort = new MatSort;
-    @ViewChild('MatPaginator1') paginator1!: MatPaginator;
-    @ViewChild('MatPaginator2') paginator2!: MatPaginator;
-    @ViewChild('MatPaginator3') paginator3!: MatPaginator;
+    private paginator1!: MatPaginator;
+    private paginator2!: MatPaginator;
+    private paginator3!: MatPaginator;
+    private MatSort1!: MatSort;
+    private MatSort2!: MatSort;
+    private MatSort3!: MatSort;
+
+    @ViewChild('MatSort1') set matSort1(ms: MatSort) {
+        this.MatSort1 = ms;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild('MatPaginator1') set matPaginator1(mp: MatPaginator) {
+        this.paginator1 = mp;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild('MatSort2') set matSort2(ms: MatSort) {
+        this.MatSort2 = ms;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild('MatPaginator2') set matPaginator2(mp: MatPaginator) {
+        this.paginator2 = mp;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild('MatSort3') set matSort3(ms: MatSort) {
+        this.MatSort3 = ms;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild('MatPaginator3') set matPaginator3(mp: MatPaginator) {
+        this.paginator3 = mp;
+        this.setDataSourceAttributes();
+    }
+
+    setDataSourceAttributes() {
+        this.dataSrc.sort = this.MatSort1;
+        this.dataSource.sort = this.MatSort2;
+        this.dataSrcCat.sort = this.MatSort3;
+        this.dataSrc.paginator = this.paginator1;
+        this.dataSource.paginator = this.paginator2;
+        this.dataSrcCat.paginator = this.paginator3;
+    }
+
     titulo = "marca";
 
     constructor(private _serviceColor: ColorService,
                 private _serviceMarca: MarcaService,
                 private _serviceCategoria: CategoriaService,
-                public dialog: MatDialog) { }
+                public dialog: MatDialog) { 
+                    this.dialog.afterAllClosed.subscribe(()=> this.obtenerMarcas());
+                    this.dialog.afterAllClosed.subscribe(()=> this.obtenerColores()) 
+                    this.dialog.afterAllClosed.subscribe(()=> this.obtenerCategorias()) 
+                }
 
     ngOnInit(): void {
         this.obtenerColores();
@@ -48,7 +93,7 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
     }
 
     setTituloCategoria(){
-        this.titulo = "categoria";
+        this.titulo = "categoría";
     }
 
     setTituloColor(){
@@ -58,14 +103,6 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
     setTituloMarca(){
         this.titulo = "marca";
     }
-  
-   // $("some selector").click({param1: "Hello", param2: "World"}, cool_function);
-
-// function cool_function(event){
-//     alert(event.data.param1);
-//     alert(event.data.param2);
-// }
-  
 
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
@@ -102,42 +139,58 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
         });
     }
 
-    eliminarTarjeta(id: number){
-        this._serviceCategoria.deleteCategoria(id).subscribe(data => {
-        this.obtenerCategorias();
-        }, error => {
-        console.log(error);
-        })
-    }
-
-    eliminarMarca(id: number){
-        this._serviceMarca.deleteMarca(id).subscribe(data => {
-        this.obtenerMarcas();
-        }, error => {
-        console.log(error);
-        })
-    }
-
-    eliminarColor(id: number){
-        this._serviceColor.deleteColor(id).subscribe(data => {
-        this.obtenerColores();
-        }, error => {
-        console.log(error);
-        })
-    }
-
-    ngAfterViewInit() {
-        this.dataSrc.sort = this.MatSort1;
-        this.dataSource.sort = this.MatSort2;
-        this.dataSrcCat.sort = this.MatSort3;
-        this.dataSrc.paginator = this.paginator1;
-        this.dataSource.paginator = this.paginator2;
-        this.dataSrcCat.paginator = this.paginator3;
-    }
-
     openDialog(producto: ICategoria) {
         console.log("prod: ",producto);
         this.obtenerProductoId(producto.idCategoria);
+    }
+
+    agregarCategoria() {
+        if(this.titulo === 'categoría'){
+            this.dialog.open(FormCategoriaComponent, {
+                disableClose: true,
+                width: '500px',
+                data: {idCategoria: "", nombre: "", descripcion: "", accion: "Agregar"}
+            });
+        } else if (this.titulo === 'color'){
+            this.dialog.open(FormColorComponent, {
+                disableClose: true,
+                width: '500px',
+                data: {idColor: "", nombre: "", accion: "Agregar"}
+            });
+        } else if (this.titulo === 'marca'){
+            this.dialog.open(FormMarcaComponent, {
+                disableClose: true,
+                width: '500px',
+                data: {idMarca: "", nombre: "", accion: "Agregar"}
+            });
+        }
+      }
+
+    eliminarMarca(id: Number){
+        this.dialog.open(DeleteDialogComponent, {
+            data: {
+                id: id,
+                clase: "marca"
+            }
+        });
+    }
+
+    eliminarColor(id: Number){
+        this.dialog.open(DeleteDialogComponent, {
+            data: {
+                id: id,
+                clase: "color"
+            }
+        });
+    }
+
+    eliminarCategoria(id: Number){
+        this.dialog.open(DeleteDialogComponent, {
+            data: {
+                id: id,
+                clase: "categoria"
+            }
+        });
     }
 
     openDialogCol(producto: IColor) {
@@ -154,8 +207,13 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
         this._serviceCategoria.getCategoriaById(id).subscribe(data => {
             console.log("p ",data);
             this.dialog.open(FormCategoriaComponent, {
-                width: '700px',
-                data: data as ICategoria[]
+                width: '500px',
+                data: {
+                    idCategoria: data.idCategoria,
+                    nombre: data.nombre,
+                    descripcion: data.descripcion,
+                    accion: "Editar"
+                }
             });
         },error => {
             console.log(error)
@@ -166,8 +224,12 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
         this._serviceColor.getColorById(id).subscribe(data => {
             console.log("p ",data);
             this.dialog.open(FormColorComponent, {
-                width: '700px',
-                data: data as IColor[]
+                width: '500px',
+                data: {
+                    idColor: data.idColor,
+                    nombre: data.nombre,
+                    accion: "Editar"
+                }
             });
         },error => {
             console.log(error)
@@ -178,8 +240,12 @@ export class TablaExtrasComponent implements OnInit, AfterViewInit {
         this._serviceMarca.getMarcaById(id).subscribe(data => {
             console.log("p ",data);
             this.dialog.open(FormMarcaComponent, {
-                width: '700px',
-                data: data as IMarca[]
+                width: '500px',
+                data: {
+                    idMarca: data.idMarca,
+                    nombre: data.nombre,
+                    accion: "Editar"
+                }
             });
         },error => {
             console.log(error)

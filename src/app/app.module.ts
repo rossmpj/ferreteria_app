@@ -10,7 +10,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { UserProfileComponent } from './layouts/user-profile/user-profile.component';
 import { ReportesComponent } from './layouts/reportes/reportes.component';
-import { VentasComponent } from './layouts/ventas/ventas.component';
 import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,22 +24,28 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormProductoComponent } from './layouts/productos/form-producto/form-producto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { ChartistModule } from 'ng-chartist';
-import { FormComponent } from './form/form.component';
 import { TablaProductosComponent } from './layouts/productos/tabla-productos/tabla-productos.component';
-import { TablaExtrasComponent } from './layouts/extras/tabla-extras/tabla-extras.component';
-import { FormExtrasComponent } from './layouts/extras/form-extras/form-extras.component';
-import { FormClienteComponent } from './layouts/clientes/form-cliente/form-cliente.component';
 import { TablaClientesComponent } from './layouts/clientes/tabla-clientes/tabla-clientes.component';
 import { TablaEmpleadosComponent } from './layouts/empleados/tabla-empleados/tabla-empleados.component';
+import { TablaExtrasComponent } from './layouts/extras/tabla-extras/tabla-extras.component';
+import { FormProductoComponent } from './layouts/productos/form-producto/form-producto.component';
+import { FormClienteComponent } from './layouts/clientes/form-cliente/form-cliente.component';
 import { FormEmpleadoComponent } from './layouts/empleados/form-empleado/form-empleado.component';
 import { FormColorComponent } from './layouts/extras/form-color/form-color.component';
 import { FormCategoriaComponent } from './layouts/extras/form-categoria/form-categoria.component';
 import { FormMarcaComponent } from './layouts/extras/form-marca/form-marca.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { DeleteDialogComponent } from './layouts/delete-dialog/delete-dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FormVentaComponent } from './layouts/ventas/form-venta/form-venta.component';
+import { TablaVentasComponent } from './layouts/ventas/tabla-ventas/tabla-ventas.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FacturaComponent } from './layouts/ventas/factura/factura.component';
 
 @NgModule({
     imports: [
@@ -65,7 +70,11 @@ import {MatDividerModule} from '@angular/material/divider';
         MatListModule,
         ChartistModule,
         ReactiveFormsModule, 
-        MatDividerModule
+        MatDividerModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        
     ],
     declarations: [
         AppComponent,
@@ -76,14 +85,13 @@ import {MatDividerModule} from '@angular/material/divider';
         UserProfileComponent,
         ReportesComponent,
         TablaExtrasComponent,
-        VentasComponent,
+        FormVentaComponent,
+        TablaVentasComponent,
         TablaClientesComponent,
         TablaEmpleadosComponent,
         FormProductoComponent,
-        FormComponent,
         TablaProductosComponent,
         TablaExtrasComponent,
-        FormExtrasComponent,
         FormClienteComponent,
         FormEmpleadoComponent,
         TablaClientesComponent,
@@ -91,7 +99,11 @@ import {MatDividerModule} from '@angular/material/divider';
         FormColorComponent,        
         FormColorComponent,
         FormCategoriaComponent,
-        FormMarcaComponent
+        FormMarcaComponent,
+        DeleteDialogComponent,
+        FormVentaComponent,
+        TablaVentasComponent,
+        FacturaComponent
     ],
     exports: [
         FooterComponent,
@@ -106,13 +118,14 @@ import {MatDividerModule} from '@angular/material/divider';
         MatListModule
     ],
     entryComponents: [
-        FormProductoComponent, 
-        FormExtrasComponent, 
+        FormProductoComponent,
         FormClienteComponent,
         FormEmpleadoComponent,
         FormColorComponent,
         FormCategoriaComponent,
-        FormMarcaComponent
+        FormMarcaComponent,
+        DeleteDialogComponent,
+        FormVentaComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [],

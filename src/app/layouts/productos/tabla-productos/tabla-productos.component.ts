@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
 import { IProducto } from 'src/app/interfaces/iproducto';
 import { FormProductoComponent } from 'src/app/layouts/productos/form-producto/form-producto.component';
 import { ProductoService } from 'src/app/services/producto.service';
+import { DeleteDialogComponent } from '../../delete-dialog/delete-dialog.component';
 
 @Component({
     selector: 'app-tabla-productos',
     templateUrl: './tabla-productos.component.html',
     styleUrls: ['./tabla-productos.component.css']
 })
-export class TablaProductosComponent implements OnInit {    
+export class TablaProductosComponent implements OnInit {
     ngOnInit(): void {
         this.obtenerProductos();
     }
@@ -35,19 +36,36 @@ export class TablaProductosComponent implements OnInit {
         this.obtenerProductoId(producto.idProducto, "Detalle de ");
     }
 
-  displayedColumns: string[] = ['idProducto', 'nombre', 'precio', 'medida', 'stock', 'categoria', 'color', 'marca', 'actions'];
+    eliminarProducto(id: number){        
+        this.dialog.open(DeleteDialogComponent, {
+            // width: '700px',
+            data: {
+              id: id,
+              clase: "producto"
+          }
+        });
+    }    
+
+  displayedColumns: string[] = ['idProducto', 'nombre', 'precio', 'medida', 'stock', 'idCategoria', 'idColor', 'idMarca', 'actions'];
   dataSource = new MatTableDataSource<IProducto>();
 
-  @ViewChild(MatSort)
-  sort: MatSort = new MatSort;
-  
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+    private paginator!: MatPaginator;
+    private sort!: MatSort;
 
-  ngAfterViewInit() {    
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-  }
+    @ViewChild(MatSort) set matSort(ms: MatSort) {
+        this.sort = ms;
+        this.setDataSourceAttributes();
+    }
+
+    @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+        this.paginator = mp;
+        this.setDataSourceAttributes();
+    }
+
+    setDataSourceAttributes() {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    }
 
   applyFilter(filterValue: string) {
       filterValue = filterValue.trim(); // Remove whitespace
@@ -58,12 +76,15 @@ export class TablaProductosComponent implements OnInit {
   constructor (private _serviceProducto: ProductoService,
       public dialog: MatDialog,
       private router: Router,
-      ){}
-
+      ){
+        // const dialogConfig = new MatDialogConfig();
+        this.dialog.afterAllClosed.subscribe(()=> this.obtenerProductos() )
+      }
+    
   public obtenerProductos = () => {
       this._serviceProducto.getProductos().subscribe(data => {
           this.dataSource.data = data as IProducto[];
-          console.log("dataa",this.dataSource.data);
+          console.log("dataa", this.dataSource.data);
       },error => {
           console.log(error)
       });

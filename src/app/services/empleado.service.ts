@@ -17,4 +17,16 @@ export class EmpleadoService {
     getEmpleadoById(cedula: string): Observable<any>{
         return this.http.get(this.url + this.api + cedula);
     }
+    
+    postEmpleado(empleado: any): Observable<any>{
+        return this.http.post(this.url + this.api, empleado);
+    }
+
+    updateEmpleado(cedula: string, empleado: any): Observable<any>{
+        return this.http.put(this.url + this.api + cedula, empleado);
+    }
+    
+    deleteEmpleado(cedula: string): Observable<any>{
+        return this.http.delete(this.url + this.api + cedula);
+    }
 }

@@ -7,6 +7,8 @@ import { MarcaService } from '../../../services/marca.service';
 import { ICategoria } from 'src/app/interfaces/icategoria';
 import { IColor } from 'src/app/interfaces/icolor';
 import { IMarca } from 'src/app/interfaces/imarca';
+import { ProductoService } from 'src/app/services/producto.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form-producto',
@@ -23,7 +25,9 @@ export class FormProductoComponent implements OnInit {
         private _serviceCategoria: CategoriaService,
         private _serviceColor: ColorService,
         private _serviceMarca: MarcaService,
+        private _serviceProducto: ProductoService,
         public dialogRef: MatDialogRef<FormProductoComponent>,
+        private snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any){
             this.formInstance = new FormGroup({                
                 "idProducto":  new FormControl({value: '', disabled: true}, Validators.required),
@@ -36,9 +40,9 @@ export class FormProductoComponent implements OnInit {
                 "medida": new FormControl('', Validators.required),
                 "accion": new FormControl('', Validators.required),
               });
-          this.dialogRef.disableClose = true;
-              this.formInstance.setValue(data);
-              this.formInstance.removeControl('accion');
+            this.dialogRef.disableClose = true;
+            this.formInstance.setValue(data);
+            this.formInstance.removeControl('accion');
         }
 
     ngOnInit(): void {
@@ -62,8 +66,6 @@ export class FormProductoComponent implements OnInit {
 
     public obtenerCategorias = () => {
         this._serviceCategoria.getCategorias().subscribe((cat: ICategoria[]) => {
-        // this.dataSrcCat.data = cat as ICategoria[];
-        // console.log("dataa",this.dataSrcCat.data);
         this.datosCat = cat as ICategoria[];
         },(error: any) => {
             console.log(error)
@@ -81,9 +83,50 @@ export class FormProductoComponent implements OnInit {
     public obtenerMarcas = () => {
         this._serviceMarca.getMarcas().subscribe(marca => {
         this.datosMar = marca as IMarca[];
-        // console.log("dataa",this.dataSource.data);
         },(error: any) => {
         console.log(error)
         });
+    }
+
+    public guardarProducto(){
+        this._serviceProducto.postProducto(this.formInstance.value).subscribe(() => {
+            this.snackBar.open("✔ El producto se ha guardado con éxito", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['green-snackbar'],
+            }); 
+            this.formInstance.reset();
+            this.dialogRef.close();
+        },(error: any) => {
+            console.log(error);
+            this.snackBar.open("✘ ¡Ha ocurrido un error!, el producto no se ha podido guardar", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['red-snackbar'],
+            });
+        });
+    }
+    
+    public editarProducto(id: number){
+        this._serviceProducto.updateProducto(id, this.formInstance.value).subscribe(() => {
+            this.snackBar.open("✔ El producto se ha actualizado con éxito", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['green-snackbar'],
+            });
+        },(error: any) => {
+            console.log(error);
+            this.snackBar.open("✘ ¡Ha ocurrido un error!, el producto no se ha podido actualizar", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['red-snackbar'],
+            });
+        });        
+        this.formInstance.reset();
+        this.dialogRef.close();
     }
 }

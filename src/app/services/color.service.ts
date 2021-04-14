@@ -14,11 +14,19 @@ export class ColorService {
         return this.http.get(this.url + this.api);
     }
 
-    deleteColor(id: number): Observable<any>{
-        return this.http.delete(this.url + this.api + id);
-    }
-
     getColorById(id: number): Observable<any>{
         return this.http.get(this.url + this.api + id);
+    }
+
+    postColor(color: any): Observable<any>{
+        return this.http.post(this.url + this.api, color);
+    }
+
+    updateColor(id: number, color: any): Observable<any>{
+        return this.http.put(this.url + this.api + id, color);
+    }
+
+    deleteColor(id: number): Observable<any>{
+        return this.http.delete(this.url + this.api + id);
     }
 }

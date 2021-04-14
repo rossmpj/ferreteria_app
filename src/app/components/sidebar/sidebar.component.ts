@@ -13,10 +13,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Inicio',  icon: 'dashboard', class: '' },
     { path: '/producto', title: 'Productos',  icon:'content_paste', class: '' },    
     { path: '/empleado', title: 'Empleados',  icon:'badge', class: '' },
-    { path: '/cliente', title: 'Clientes',  icon:'people', class: '' },
+    { path: '/cliente', title: 'Clientes',  icon:'people', class: '' },    
+    { path: '/extras', title: 'Extras',  icon:'pages', class: '' }, 
     // { path: '/user-profile', title: 'Mi Perfil',  icon:'person', class: '' },
-    { path: '/ventas', title: 'Ventas',  icon:'point_of_sale', class: '' },
-    { path: '/extras', title: 'Extras',  icon:'pages', class: '' },   
+    { path: '/ventas', title: 'Ventas',  icon:'point_of_sale', class: '' },  
     { path: '/reportes', title: 'Reportes',  icon:'library_books', class: ''},
 
     // { path: '/notifications', title: 'Notificaciones',  icon:'notifications', class: ''},

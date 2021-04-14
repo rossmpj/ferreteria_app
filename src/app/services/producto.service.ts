@@ -21,4 +21,16 @@ export class ProductoService {
     getProductoById(id: number): Observable<any>{
         return this.http.get(this.url + this.api + id);
     }
+    
+    postProducto(producto: any): Observable<any>{
+        return this.http.post(this.url + this.api, producto);
+    }
+
+    updateProducto(id: number, producto: any): Observable<any>{
+        return this.http.put(this.url + this.api + id, producto);
+    }
+
+    deleteProducto(id: number): Observable<any>{
+        return this.http.delete(this.url + this.api + id);
+    }
 }

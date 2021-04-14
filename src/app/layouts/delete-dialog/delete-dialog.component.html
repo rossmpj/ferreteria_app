@@ -1,0 +1,11 @@
+<h1 mat-dialog-title> Confirmación </h1>
+
+<mat-dialog-content class="mat-typography row">
+    <h3> ¿Está seguro de que desea eliminar este registro? </h3>
+    <p id="alerta" class="text-rose">El registro será eliminado definitivamente, esta acción no se podrá revertir</p>
+</mat-dialog-content>
+
+<div class="pull-right" mat-dialog-actions>
+    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger" cdkFocusInitial>Cancelar</button>
+    <button id="aceptarbtn" (click)="eliminarProducto(data.id)" mat-button mat-dialog-close class="btn btn-success" >Aceptar</button>
+</div>

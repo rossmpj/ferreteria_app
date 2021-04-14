@@ -75,8 +75,7 @@
 </mat-dialog-content>
 
 <div class="pull-right" mat-dialog-actions>
-    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger">Cancelar</button>
-    <button id="aceptarbtn" mat-button mat-dialog-close class="btn btn-primary" cdkFocusInitial>Aceptar</button>
-    <button id="guardarbtn" mat-button class="btn btn-success" cdkFocusInitial> Guardar</button>
-    <!-- {{accion==="Detalle de "? 'Cerrar' : 'Guardar'}} -->
+    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger" cdkFocusInitial>Cancelar</button>
+    <button id="aceptarbtn" mat-button mat-dialog-close class="btn btn-primary">Aceptar</button>
+    <button type="submit" id="guardarbtn" (click)="accion === 'Agregar' ? guardarProducto() : editarProducto(data.idProducto)" mat-button class="btn btn-success"> Guardar</button>
 </div>

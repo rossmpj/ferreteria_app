@@ -1,28 +1,28 @@
-<h1 mat-dialog-title>Detalle de Cliente</h1>
+<h1 mat-dialog-title> {{ accion }} cliente</h1>
 
 <mat-dialog-content class="row">
     <form [formGroup]="formInstance">
         <div class="row">
-            <div class="col-md-12">
-                <mat-form-field appearance="outline">
+            <div id="" class="col-md-12">
+                <mat-form-field appearance="fill">
                     <mat-label> Cédula </mat-label>  
                     <input class="form-control" formControlName="cedula" matInput placeholder="Escriba aquí sus nombres completos" type="text">
                 </mat-form-field>
             </div>
             <div class="col-md-12">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="fill">
                     <mat-label> Nombre </mat-label>  
                     <input class="form-control" formControlName="nombre" matInput placeholder="Escriba aquí sus nombres completos" type="text">
                 </mat-form-field>
             </div>
             <div class="col-md-12">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="fill">
                     <mat-label> Apellido </mat-label> 
                     <input class="form-control" formControlName="apellido" matInput placeholder="Escriba aquí sus apellidos completos" type="text">
                 </mat-form-field>
             </div>
             <div class="col-md-12">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="fill">
                     <mat-label> Teléfono </mat-label>  
                     <input class="form-control" formControlName="telefono" matInput placeholder="" type="text">
                 </mat-form-field>
@@ -32,6 +32,7 @@
 </mat-dialog-content>
 
 <div class="pull-right" mat-dialog-actions>
-    <button mat-button class="btn btn-danger">Cancelar</button>
-    <button mat-button mat-dialog-close class="btn btn-success" cdkFocusInitial>Aceptar</button>
+    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger" cdkFocusInitial>Cancelar</button>
+    <button id="aceptarbtn" mat-button mat-dialog-close class="btn btn-primary">Aceptar</button>
+    <button (click)="accion === 'Agregar' ? guardarCliente() : editarCliente(data.cedula)" id="guardarbtn" mat-button class="btn btn-success"> Guardar</button>
 </div>

@@ -1,71 +1,92 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CategoriaService } from '../../../services/categoria.service';
-import { ColorService } from '../../../services/color.service';
-import { MarcaService } from '../../../services/marca.service';
-import { ICategoria } from 'src/app/interfaces/icategoria';
-import { IColor } from 'src/app/interfaces/icolor';
-import { IMarca } from 'src/app/interfaces/imarca';
-import { IEmpleado } from '../../user-profile/user-profile.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EmpleadoService } from 'src/app/services/empleado.service';
+import { ProductoService } from 'src/app/services/producto.service';
 
 @Component({
-  selector: 'app-form-empleado',
-  templateUrl: './form-empleado.component.html',
-  styleUrls: ['./form-empleado.component.css']
+    selector: 'app-form-empleado',
+    templateUrl: './form-empleado.component.html',
+    styleUrls: ['./form-empleado.component.css']
 })
 export class FormEmpleadoComponent implements OnInit {
-  formInstance!: FormGroup;
-  datosCat: ICategoria[] | undefined;
-  datosCol: IColor[] | undefined;
-  datosMar: IMarca[] | undefined;
-  constructor(
-      private _serviceCategoria: CategoriaService,
-      private _serviceColor: ColorService,
-      private _serviceMarca: MarcaService,
-      public dialogRef: MatDialogRef<FormEmpleadoComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: IEmpleado){
-          this.formInstance = new FormGroup({                
-              "idEmpleado":  new FormControl({value: '', disabled: true}, Validators.required),
-              "nombre": new FormControl('', Validators.required),
-              "apellido": new FormControl('', Validators.required),
-              "correo": new FormControl('', Validators.required),
-              "cedula": new FormControl('', Validators.required),
+    formInstance!: FormGroup;
+    accion!: string;
+    constructor(
+        public dialogRef: MatDialogRef<FormEmpleadoComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private _serviceEmpleado: EmpleadoService,
+        private snackBar: MatSnackBar){
+            this.formInstance = new FormGroup({                
+                "idEmpleado":  new FormControl('', Validators.required),
+                "nombre": new FormControl('', Validators.required),
+                "apellido": new FormControl('', Validators.required),
+                "correo": new FormControl('', Validators.required),
+                "cedula": new FormControl('', Validators.required),
+                "accion": new FormControl('', Validators.required),
             });
-        
+            this.dialogRef.disableClose = true;
             this.formInstance.setValue(data);
-      }
+            this.formInstance.removeControl('accion');
+    }
 
-  ngOnInit(): void {
-      this.obtenerCategorias();
-      this.obtenerColores();
-      this.obtenerMarcas();
-  }
+    ngOnInit(): void {   
+        this.accion = this.data.accion;
+        if (this.accion == "Agregar"){
+            $("#aceptarbtn").hide();
+        }
+        if (this.accion == "Editar"){
+            $("#aceptarbtn").hide();
+            this.formInstance.controls.idEmpleado.disable();
 
-  public obtenerCategorias = () => {
-      this._serviceCategoria.getCategorias().subscribe((cat: ICategoria[]) => {
-      // this.dataSrcCat.data = cat as ICategoria[];
-      // console.log("dataa",this.dataSrcCat.data);
-      this.datosCat = cat as ICategoria[];
-      },(error: any) => {
-          console.log(error)
-      });
-  }
-  
-  public obtenerColores = () => {
-      this._serviceColor.getColores().subscribe(data => {
-      this.datosCol = data as IColor[];
-      },error => {
-      console.log(error)
-      });
-  }
+        }
+        if (this.accion == "Detalle de "){
+            $("#cancelarbtn").hide();
+            $("#guardarbtn").hide();
+            this.formInstance.disable();
+        }
+    }
 
-  public obtenerMarcas = () => {
-      this._serviceMarca.getMarcas().subscribe(marca => {
-      this.datosMar = marca as IMarca[];
-      // console.log("dataa",this.dataSource.data);
-      },(error: any) => {
-      console.log(error)
-      });
-  }
+    public guardarEmpleado(){
+        this._serviceEmpleado.postEmpleado(this.formInstance.value).subscribe(() => {
+            this.snackBar.open("✔ El empleado se ha guardado con éxito", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['green-snackbar'],
+            }); 
+            this.formInstance.reset();
+            this.dialogRef.close();
+        },(error: any) => {
+            console.log(error);
+            this.snackBar.open("✘ ¡Ha ocurrido un error!, el empleado no se ha podido guardar", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['red-snackbar'],
+            });
+        });
+    }
+    
+    public editarEmpleado(id: string){
+        this._serviceEmpleado.updateEmpleado(id, this.formInstance.value).subscribe(() => {
+            this.snackBar.open("✔ El empleado se ha actualizado con éxito", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['green-snackbar'],
+            });
+        },(error: any) => {
+            console.log(error);
+            this.snackBar.open("✘ ¡Ha ocurrido un error!, el empleado no se ha podido actualizar", "OK", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+                panelClass: ['red-snackbar'],
+            });
+        });
+        this.formInstance.reset();
+        this.dialogRef.close();
+    }
 }

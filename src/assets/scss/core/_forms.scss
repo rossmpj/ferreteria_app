@@ -371,7 +371,7 @@ fieldset[disabled] .form-control,
 fieldset[disabled] .form-group .form-control{
   background-color: transparent;
   cursor: not-allowed;
-  border-bottom: 1px dotted $input-border-color;
+  border-bottom: 0px dotted $input-border-color;
   background-repeat: no-repeat;
 }
 

@@ -1,0 +1,203 @@
+<!-- <h1 mat-dialog-title> Detalle de venta</h1>
+<mat-dialog-content class="row">
+    <form [formGroup]="formInstance">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Fecha </mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label> Cliente </mat-label>
+                    <mat-select formControlName="cedula">
+                        <mat-option *ngFor="let dato of datos" [value]="dato.cedula">
+                            {{dato.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <h4 mat-dialog-title> Productos</h4>
+        <table mat-table [dataSource]="transactions" >
+            <ng-container matColumnDef="item">
+              <th mat-header-cell *matHeaderCellDef> Item </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.item}} </td>
+              <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="cost">
+              <th mat-header-cell *matHeaderCellDef> Cost </th>
+              <td mat-cell *matCellDef="let transaction"> {{transaction.cost | currency}} </td>
+              <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+          </table>
+          
+    </form>
+</mat-dialog-content>
+
+<div class="pull-right" mat-dialog-actions>
+    <button id="cancelarbtn" mat-button mat-dialog-close class="btn btn-danger" cdkFocusInitial>Cancelar</button>
+    <button id="aceptarbtn" mat-button mat-dialog-close class="btn btn-primary">Aceptar</button>
+    <button type="submit" id="guardarbtn" (click)="accion === 'Agregar' ? guardarProducto() : editarProducto(data.idProducto)" mat-button class="btn btn-success"> Guardar</button>
+</div> -->
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <section>
+                    <div class="example-button-row">
+                        <button (click)="onSubmit()" mat-raised-button class="btn btn-default"><i class="material-icons">arrow_back_ios</i> Regresar</button> 
+                    </div>
+                </section>
+                <!-- <div class="card">
+                    <div class="card-header card-header-rose">
+                        <h4 class="card-title">Editar Producto</h4> -->
+                <div class="card">
+                    <div class="card-body">  
+                        <h1 mat-dialog-title> Registrar venta </h1>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <form [formGroup]="formInstance"> 
+                                    <div class="row">                 
+                                        <div class="col-md-6">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label> Fecha </mat-label>
+                                                <input formControlName="fecha" matInput [matDatepicker]="picker">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label> Cliente </mat-label>
+                                                <mat-select formControlName="idCliente">
+                                                    <mat-option *ngFor="let dato of datos" [value]="dato.cedula">
+                                                        {{dato.nombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- <div class="row"> -->
+                                    <!-- <div class="col-md-6"> -->
+                                        <div class="example-label">
+                                            <section>
+                                                <div class="example-button-row">
+                                                    <mat-form-field appearence="fill">
+                                                        <mat-icon matSuffix>search</mat-icon>
+                                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar producto">
+                                                    </mat-form-field>
+                                                </div>
+                                            </section>
+                                        </div>
+                            
+                                        <div class="card">
+                                            <div class="card-header card-header-rose">
+                                                <h4 class="card-title ">Lista de productos</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table mat-table [dataSource]="dataSource" matSort *ngIf="dataSource.filteredData.length > 0">
+                                                        <!-- <ng-container matColumnDef="position">
+                                                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="name">
+                                                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="weight">
+                                                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="symbol">
+                                                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                                        </ng-container> -->
+                                                        <ng-container matColumnDef="idProducto">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                                                            <td mat-cell *matCellDef="let element">{{element.idProducto}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="nombre">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="precio">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+                                                            <td mat-cell *matCellDef="let element"> $ {{element.precio}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="medida">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Medida </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.medida == NULL || element.medida == '' ? 'N/A': element.medida}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="stock">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+                                                        </ng-container>
+                                                        <!-- <ng-container matColumnDef="idCategoria">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.idCategoria}} </td>
+                                                        </ng-container> -->
+                                                        <ng-container matColumnDef="idColor">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.idColor}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="idMarca">
+                                                            <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.idMarca}} </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="actions">
+                                                            <th class="text-primary" mat-header-cell  *matHeaderCellDef >  </th>
+                                                            <td mat-cell *matCellDef="let element" >
+                                                                <button (valueUpdate)="getUpdatedvalue()" (click)="addCart(element)" mat-icon-button class="btn btn-just-icon btn-success btn-sm"><i class="material-icons">add_shopping_cart</i></button>
+                                                                <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
+                                                            </td>    
+                                                        </ng-container>
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                                    </table>
+                                                    <div class="txt" *ngIf="dataSource.filteredData.length === 0"><img src="/assets/img/n.png">No hay datos para mostrar</div>
+                            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- <app-tabla-productos></app-tabla-productos> -->
+                            </div>
+
+                            <div class="col-md-5">
+                                <app-factura [Addition]="articulo" (ngModelChange)="getUpdatedvalue()" (valueUpdate)="getUpdatedvalue()"></app-factura>
+                                <!-- <p>From Parent - {{Addition}}</p>  -->
+                                <!-- <p *ngFor="let element of Addition"><strong>name:</strong> {{element.nombre}} <strong>id:</strong> {{element.idProducto}}</p> -->
+                                <!-- 
+                                  ( valueUpdate)="getUpdatedvalue($event)" -->
+                                    <table border="1">
+                                    <tr>
+                                      <td>Sueldos</td>
+                                    </tr>
+                                    <tr *ngFor="let sueldo of articulo">
+                                      <td>{{sueldo.nombre}}</td>
+                                    </tr>
+                                  </table>  
+                            </div>
+                        </div> 
+                            <!-- end card  -->
+                    </div>
+                </div>
+                <!-- end main container -->
+            </div>
+        </div> 
+    </div>
+</div>

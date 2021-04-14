@@ -2,7 +2,7 @@ export interface IProducto {
     idProducto: number;
     nombre: string;
     precio: number;
-    medida: string;
+    medida: string | null;
     // imagen: string;
     stock: number;
     idColor: number;

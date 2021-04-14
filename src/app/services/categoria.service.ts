@@ -14,11 +14,19 @@ export class CategoriaService {
         return this.http.get(this.url + this.api);
     }
 
-    deleteCategoria(id: number): Observable<any>{
-        return this.http.delete(this.url + this.api + id);
-    }
-
     getCategoriaById(id: number): Observable<any>{
         return this.http.get(this.url + this.api + id);
+    }
+
+    postCategoria(categoria: any): Observable<any>{
+        return this.http.post(this.url + this.api, categoria);
+    }
+
+    updateCategoria(id: number, categoria: any): Observable<any>{
+        return this.http.put(this.url + this.api + id, categoria);
+    }
+    
+    deleteCategoria(id: number): Observable<any>{
+        return this.http.delete(this.url + this.api + id);
     }
 }

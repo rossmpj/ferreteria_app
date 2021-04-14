@@ -5,12 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { UserProfileComponent } from './layouts/user-profile/user-profile.component';
 import { ReportesComponent } from './layouts/reportes/reportes.component';
-import { VentasComponent } from './layouts/ventas/ventas.component';
 import { FormProductoComponent } from './layouts/productos/form-producto/form-producto.component';
 import { TablaProductosComponent } from './layouts/productos/tabla-productos/tabla-productos.component';
 import { TablaExtrasComponent } from './layouts/extras/tabla-extras/tabla-extras.component';
 import { TablaClientesComponent } from './layouts/clientes/tabla-clientes/tabla-clientes.component';
 import { TablaEmpleadosComponent } from './layouts/empleados/tabla-empleados/tabla-empleados.component';
+import { TablaVentasComponent } from './layouts/ventas/tabla-ventas/tabla-ventas.component';
+import { FormVentaComponent } from './layouts/ventas/form-venta/form-venta.component';
 
 const routes: Routes =[
   {
@@ -45,7 +46,7 @@ const routes: Routes =[
   }, 
   {
     path: 'ventas',
-    component: VentasComponent,
+    component: TablaVentasComponent,
   }, {
     path: 'cliente',
     component: TablaClientesComponent,
@@ -55,8 +56,8 @@ const routes: Routes =[
     component: TablaEmpleadosComponent,
   }, 
   {
-    path: 'form-producto',
-    component: FormProductoComponent,
+    path: 'form-venta',
+    component: FormVentaComponent,
   }
 ];
 
