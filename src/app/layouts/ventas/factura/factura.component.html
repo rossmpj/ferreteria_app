@@ -4,39 +4,44 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table #table mat-table matSort [dataSource]="transactions" *ngIf="transactions">
-                <ng-container matColumnDef="idProducto">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element">{{element.idProducto}} </td>
+            <table mat-table [dataSource]="transactions" >
+                <ng-container matColumnDef="producto">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.idProducto}} </td>
+                <td mat-footer-cell *matFooterCellDef > Total </td>
                 </ng-container>
-                <ng-container matColumnDef="nombre">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                <ng-container matColumnDef="costo">
+                <th mat-header-cell *matHeaderCellDef> Precio </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.precio }} </td>
+                <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
                 </ng-container>
-                <ng-container matColumnDef="precio">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
-                    <td mat-cell *matCellDef="let element"> $ {{element.precio}} </td>
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell  *matHeaderCellDef > Cantidad </th>
+                    <td id="dd" mat-cell *matCellDef="let transaction" >
+                        <!-- <mat-form-field appearance="fill"> -->
+                            <input class="form-control" matInput placeholder="1" type="number">
+                        <!-- </mat-form-field> -->
+                        <!-- <div class="wrapper">
+                            <button (click)="handleMinus()" mat-icon-button class="btn btn-just-icon btn-default btn-sm"><i class="material-icons">remove</i></button>          
+                            <input id="addr" type="number" class="num" value="0" [(ngModel)]="value" />
+                            <button (click)="handlePlus()" mat-icon-button class="btn btn-just-icon btn-default btn-sm"><i class="material-icons">add</i></button>          
+                        </div> -->
+                        
+                        <!-- <section>
+                            <div class="example-button-row">
+                        <button mat-icon-button class="btn btn-just-icon btn-round btn-success btn-sm"><i class="material-icons">add</i></button>          
+                        <mat-label> 1 </mat-label>
+                        <button mat-icon-button class="btn btn-just-icon btn-round btn-success btn-sm"><i class="material-icons">remove</i></button>
+                    </div>
+                </section> -->
+                        <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
+                    </td>    
                 </ng-container>
-                <ng-container matColumnDef="medida">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Medida </th>
-                    <td mat-cell *matCellDef="let element"> {{element.medida == NULL || element.medida == '' ? 'N/A': element.medida}} </td>
-                </ng-container>
-                <ng-container matColumnDef="stock">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
-                    <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-                </ng-container>
-                <!-- <ng-container matColumnDef="idCategoria">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </th>
-                    <td mat-cell *matCellDef="let element"> {{element.idCategoria}} </td>
-                </ng-container> -->
-                <ng-container matColumnDef="idColor">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                    <td mat-cell *matCellDef="let element"> {{element.idColor}} </td>
-                </ng-container>
-                <ng-container matColumnDef="idMarca">
-                    <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
-                    <td mat-cell *matCellDef="let element"> {{element.idMarca}} </td>
-                </ng-container>
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef> Total </th>
+                    <td mat-cell *matCellDef="let transaction"> {{transaction.precio }} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+                    </ng-container>
                     <ng-container matColumnDef="actions">
                         <th class="text-primary" mat-header-cell  *matHeaderCellDef >  </th>
                         <td mat-cell *matCellDef="let element" >
@@ -44,9 +49,9 @@
                             <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
                         </td>    
                     </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns2"></tr> -->
+                <tr mat-footer-row *matFooterRowDef="displayedColumns2; sticky: true"></tr>
             </table>
  
         </div>

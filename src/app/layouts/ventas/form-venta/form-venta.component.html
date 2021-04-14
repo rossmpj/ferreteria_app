@@ -65,7 +65,7 @@
                     <div class="card-body">  
                         <h1 mat-dialog-title> Registrar venta </h1>
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <form [formGroup]="formInstance"> 
                                     <div class="row">                 
                                         <div class="col-md-6">
@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table mat-table [dataSource]="dataSource" matSort *ngIf="dataSource.filteredData.length > 0">
+                                                    <table #table1 mat-table [dataSource]="dataSource" #MatSort1="matSort"  matSort *ngIf="dataSource.filteredData.length > 0">
                                                         <!-- <ng-container matColumnDef="position">
                                                         <th mat-header-cell *matHeaderCellDef> No. </th>
                                                         <td mat-cell *matCellDef="let element"> {{element.position}} </td>
@@ -127,6 +127,7 @@
                                                         <ng-container matColumnDef="idProducto">
                                                             <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
                                                             <td mat-cell *matCellDef="let element">{{element.idProducto}} </td>
+                                                            
                                                         </ng-container>
                                                         <ng-container matColumnDef="nombre">
                                                             <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
@@ -159,7 +160,7 @@
                                                         <ng-container matColumnDef="actions">
                                                             <th class="text-primary" mat-header-cell  *matHeaderCellDef >  </th>
                                                             <td mat-cell *matCellDef="let element" >
-                                                                <button (valueUpdate)="getUpdatedvalue()" (click)="addCart(element)" mat-icon-button class="btn btn-just-icon btn-success btn-sm"><i class="material-icons">add_shopping_cart</i></button>
+                                                                <button (click)="addCart(element)" mat-icon-button class="btn btn-just-icon btn-success btn-sm"><i class="material-icons">add_shopping_cart</i></button>
                                                                 <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
                                                             </td>    
                                                         </ng-container>
@@ -167,7 +168,7 @@
                                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                                     </table>
                                                     <div class="txt" *ngIf="dataSource.filteredData.length === 0"><img src="/assets/img/n.png">No hay datos para mostrar</div>
-                            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                            <mat-paginator #MatPaginator1="matPaginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
                             
                                                 </div>
                                             </div>
@@ -177,20 +178,103 @@
                                 <!-- <app-tabla-productos></app-tabla-productos> -->
                             </div>
 
-                            <div class="col-md-5">
-                                <app-factura [Addition]="articulo" (ngModelChange)="getUpdatedvalue()" (valueUpdate)="getUpdatedvalue()"></app-factura>
-                                <!-- <p>From Parent - {{Addition}}</p>  -->
-                                <!-- <p *ngFor="let element of Addition"><strong>name:</strong> {{element.nombre}} <strong>id:</strong> {{element.idProducto}}</p> -->
-                                <!-- 
-                                  ( valueUpdate)="getUpdatedvalue($event)" -->
-                                    <table border="1">
-                                    <tr>
-                                      <td>Sueldos</td>
-                                    </tr>
-                                    <tr *ngFor="let sueldo of articulo">
-                                      <td>{{sueldo.nombre}}</td>
-                                    </tr>
-                                  </table>  
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header card-header-info">
+                                        <h4 class="card-title ">Factura</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                <table mat-table #table2 #MatSort2="matSort" [dataSource]="transactions" matSort *ngIf="transactions.filteredData.length > 0">
+                                    <!-- <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="weight">
+                                    <th mat-header-cell *matHeaderCellDef> Weight </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="symbol">
+                                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                    </ng-container> -->
+                                    <ng-container matColumnDef="idProducto">
+                                        <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                                        <td mat-cell *matCellDef="let element">{{element.idProducto}} </td>
+                                        <td mat-footer-cell *matFooterCellDef > Total </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="nombre">
+                                        <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                                        <td mat-footer-cell *matFooterCellDef>  </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="precio">
+                                        <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+                                        <td mat-cell *matCellDef="let element"> $ {{element.precio}} </td>
+                                        <td mat-footer-cell *matFooterCellDef>  </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="medida">
+                                        <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Medida </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.medida == NULL || element.medida == '' ? 'N/A': element.medida}} </td>
+                                        <td mat-footer-cell *matFooterCellDef>  </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="stock">
+                                        <th class="text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+                                        <td mat-footer-cell *matFooterCellDef>  </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="cantidad">
+                                        <th mat-header-cell  *matHeaderCellDef > Cantidad </th>
+                                        <td id="dd" mat-cell *matCellDef="let element" >
+                                            <!-- <mat-form-field appearance="fill"> -->
+                                                <input [(ngModel)]="element.cantidad" (change)="emailUpdated($event)" class="form-control" matInput placeholder="1" type="number">
+                                            <!-- </mat-form-field> 
+                                            [(ngModel)]="element.cantidad" (change)="emailUpdated($event)"-->
+                                            <!-- <div class="wrapper">
+                                                <button (click)="handleMinus()" mat-icon-button class="btn btn-just-icon btn-default btn-sm"><i class="material-icons">remove</i></button>          
+                                                <input id="addr" type="number" class="num" value="0" [(ngModel)]="value" />
+                                                <button (click)="handlePlus()" mat-icon-button class="btn btn-just-icon btn-default btn-sm"><i class="material-icons">add</i></button>          
+                                            </div> -->
+                                            
+                                            <!-- <section>
+                                                <div class="example-button-row">
+                                            <button mat-icon-button class="btn btn-just-icon btn-round btn-success btn-sm"><i class="material-icons">add</i></button>          
+                                            <mat-label> 1 </mat-label>
+                                            <button mat-icon-button class="btn btn-just-icon btn-round btn-success btn-sm"><i class="material-icons">remove</i></button>
+                                        </div>
+                                    </section> -->
+                                            <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
+                                        </td> 
+                                        <td mat-footer-cell *matFooterCellDef >  </td>
+                       
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
+                                        <th mat-header-cell *matHeaderCellDef> Total </th>
+                                        <td mat-cell *matCellDef="let transaction"> {{ getPrecioFinal(transaction.precio, transaction.cantidad) }} </td>
+                                        <td mat-footer-cell *matFooterCellDef> {{ getTotalCost(cantidad) }} </td>
+                                        <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
+                                        </ng-container>
+                                    <ng-container matColumnDef="actions">
+                                        <th class="text-primary" mat-header-cell  *matHeaderCellDef >  </th>
+                                        <td mat-cell *matCellDef="let element" >
+                                            <button (click)="removeCart(element.idProducto)" mat-icon-button class="btn btn-just-icon btn-warning btn-sm"><i class="material-icons">remove_shopping_cart</i></button>
+                                            <!-- &nbsp;<button (click)="eliminarEmpleado(element.idEmpleado)" mat-icon-button class="btn btn-just-icon btn-danger btn-sm"><i class="material-icons">delete</i></button> -->
+                                        </td>    
+                                        <td mat-footer-cell *matFooterCellDef>  </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                                    <tr mat-footer-row *matFooterRowDef="displayedColumns2; sticky: true"></tr>
+                                </table>
+                                <div class="txt" *ngIf="transactions.filteredData.length === 0"><img src="/assets/img/n.png">No ha agregado ningún producto</div>
+                                <!-- <mat-paginator class="mat-paginator" #MatPaginator2="matPaginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator> -->
+                            </div>
+                        </div>
+                    </div>
                             </div>
                         </div> 
                             <!-- end card  -->

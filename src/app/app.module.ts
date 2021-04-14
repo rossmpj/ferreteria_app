@@ -46,7 +46,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FacturaComponent } from './layouts/ventas/factura/factura.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
     imports: [
         CommonModule,
@@ -74,7 +74,7 @@ import { FacturaComponent } from './layouts/ventas/factura/factura.component';
         MatSnackBarModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        
+        MatTooltipModule
     ],
     declarations: [
         AppComponent,
