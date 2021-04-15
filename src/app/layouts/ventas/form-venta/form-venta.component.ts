@@ -9,6 +9,7 @@ import { ProductoService } from 'src/app/services/producto.service';
 import { IProducto } from 'src/app/interfaces/iproducto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FacturaComponent } from '../factura/factura.component';
+import { IVenta } from 'src/app/interfaces/iventa';
 
 @Component({
   providers:  [FacturaComponent],
@@ -29,6 +30,8 @@ export class FormVentaComponent implements OnInit {
   value = 0;
   formInstance!: FormGroup;
   articulo: IProducto[] = [];
+  venta: IVenta[] = [];
+
   getUpdatedvalue() {  
     console.log("ev:",this.articulo);  
     // this.articulo = $event;  
@@ -73,24 +76,39 @@ export class FormVentaComponent implements OnInit {
         this.paginator2 = mp;
         this.setDataSourceAttributes();
     }
+
     getTotalCost(cantidad: number) {
       // let ttotal = precio*cantidad;
       let total = this.articulo.map(t => t.precio*cantidad).reduce((acc: any, value: any) => acc + value, 0);
+      // console.log("cant", this.articulo);
       return total.toFixed(2);
     }
-    getPrecioFinal(precio: number, cantidad: number) {
-      console.log("cant",cantidad);
+
+    getPrecioFinal(precio: number, cantidad: number, id: number) {
+      console.log("trans: ", this.transactions.data);
+
       if(cantidad == undefined){
         cantidad = 1;
       }
-      let total = precio*cantidad;
-      console.log("total ",total*cantidad);
+
+      let total = precio * cantidad;
+      // console.log("total ",total*cantidad);
+     
+  for( var i = 0; i < this.venta.length; i++){ 
+    
+    if ( this.venta[i].idProducto === id) { 
+
+        this.venta[i].cantidad=cantidad;
+    }
+
+}
+   console.log("ventass:  ",this.venta);
       return total.toFixed(2);
       // map(t => t.precio).reduce((acc: any, value: any) => acc + value, 0);
       // return Math.round(total * 100) / 100;
     }
     emailUpdated(event: any) {
-      console.log("vev",event.target.value);
+      // console.log("vev",event.target.value);
       // this.cantidad = event.target.value;
       return event.target.value;
     }
@@ -121,26 +139,21 @@ export class FormVentaComponent implements OnInit {
   //  this.articulo?.forEach(e => {
   //  console.log("art: ",e);
   //  });
-  this.transactions.data= this.articulo;
-   console.log(this.articulo);
+  this.transactions.data = this.articulo;
+  var index1 = this.venta.findIndex(x => x.idProducto==element.idProducto); 
+  index1 === -1 ? this.venta.push({idProducto: element.idProducto, cedula: '0000000000', 
+  idEmpleado: 'rmpincay', fecha: '', cantidad: 1, codigo: '3333'}) : console.log("object already exists")
+  
  }
 
  removeCart(element: number){
-//   for( var i = 0; i < this.articulo.length; i++){ 
-    
-//     if ( this.articulo[i].idCategoria === element) { 
-
-//         this.articulo.splice(i, 1); 
-//     }
-
-// }
 for (var i = this.articulo.length - 1; i >= 0; --i) {
   // console.log(this.transactions.data[i].idCategoria
   if (this.articulo[i].idProducto.toString() === element.toString()) {
     this.articulo.splice(i,1);
   }
 }
-console.log("art: ", this.articulo)
+// console.log("art: ", this.articulo)
  //  this.articulo?.forEach(e => {
  //  console.log("art: ",e);
  //  });
